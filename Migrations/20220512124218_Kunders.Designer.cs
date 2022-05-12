@@ -11,8 +11,8 @@ using kunde.dira.no.Data.EF;
 namespace kunde.dira.no.Migrations
 {
     [DbContext(typeof(PostgresContext))]
-    [Migration("20220505163022_Kunder")]
-    partial class Kunder
+    [Migration("20220512124218_Kunders")]
+    partial class Kunders
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace kunde.dira.no.Migrations
                 .HasAnnotation("ProductVersion", "6.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseSerialColumns(modelBuilder);
 
             modelBuilder.Entity("kunde.dira.no.Models.Kunder", b =>
                 {
@@ -29,7 +29,7 @@ namespace kunde.dira.no.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("OrgNr"));
+                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<long>("OrgNr"));
 
                     b.Property<string>("Adresse")
                         .IsRequired()

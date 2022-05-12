@@ -1,12 +1,10 @@
-﻿#nullable disable
-using kunde.dira.no.Data.EF;
+﻿using kunde.dira.no.Data.EF;
 using kunde.dira.no.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace kunde.dira.no.KundersController
 {
-    [Area("Kunder")]
     public class KundersController : Controller
     {
         private readonly PostgresContext _context;
@@ -19,13 +17,15 @@ namespace kunde.dira.no.KundersController
         // GET: Kunders
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Kunders.ToListAsync());
+              return _context.Kunders != null ? 
+                          View(await _context.Kunders.ToListAsync()) :
+                          Problem("Entity set 'PostgresContext.Kunders'  is null.");
         }
 
         // GET: Kunders/Details/5
         public async Task<IActionResult> Details(long? id)
         {
-            if (id == null)
+            if (id == null || _context.Kunders == null)
             {
                 return NotFound();
             }
@@ -65,7 +65,7 @@ namespace kunde.dira.no.KundersController
         // GET: Kunders/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
-            if (id == null)
+            if (id == null || _context.Kunders == null)
             {
                 return NotFound();
             }
@@ -116,7 +116,7 @@ namespace kunde.dira.no.KundersController
         // GET: Kunders/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
-            if (id == null)
+            if (id == null || _context.Kunders == null)
             {
                 return NotFound();
             }
@@ -136,15 +136,23 @@ namespace kunde.dira.no.KundersController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
+            if (_context.Kunders == null)
+            {
+                return Problem("Entity set 'PostgresContext.Kunders'  is null.");
+            }
             var kunder = await _context.Kunders.FindAsync(id);
-            _context.Kunders.Remove(kunder);
+            if (kunder != null)
+            {
+                _context.Kunders.Remove(kunder);
+            }
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool KunderExists(long id)
         {
-            return _context.Kunders.Any(e => e.OrgNr == id);
+          return (_context.Kunders?.Any(e => e.OrgNr == id)).GetValueOrDefault();
         }
     }
 }

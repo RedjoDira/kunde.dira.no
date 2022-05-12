@@ -5,7 +5,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace kunde.dira.no.Migrations
 {
-    public partial class Kunder : Migration
+    public partial class Kunders : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace kunde.dira.no.Migrations
                 columns: table => new
                 {
                     OrgNr = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Adresse = table.Column<string>(type: "text", nullable: false),
                     PostNrSted = table.Column<string>(type: "text", nullable: false),
                     KontaktPTek = table.Column<string>(type: "text", nullable: false),

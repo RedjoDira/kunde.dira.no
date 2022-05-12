@@ -7,16 +7,15 @@ namespace kunde.dira.no.Data.EF
     {
 
 
-        public PostgresContext(DbContextOptions<PostgresContext> options) :
-
-    base(options)
+        public PostgresContext(DbContextOptions<PostgresContext> options):
+        base(options)
         {
 
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.UseSerialColumns();
         }
 
         public DbSet<Kunder> Kunders { get; set; }

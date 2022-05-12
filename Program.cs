@@ -11,6 +11,12 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+builder.Services.AddDbContext<PostgresContext>(
+    o => o.UseNpgsql(builder.Configuration.GetConnectionString("KundeDiraLocal")));
+
+
 builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureAd"));
 
@@ -19,11 +25,7 @@ builder.Services.AddAuthorization(options =>
     // By default, all incoming requests will be authorized according to the default policy.
     options.FallbackPolicy = options.DefaultPolicy;
 });
-builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
-builder.Services.AddDbContext<PostgresContext>(o
-    => o.UseNpgsql(builder.Configuration.GetConnectionString("KundeDiraLocal")));
 
 
 
@@ -55,7 +57,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Kunders}/{action=Index}/{id?}");
+        pattern: "{controller=Kunders}/{action=Index.cshtml}/{id?}");
 
 });
 
