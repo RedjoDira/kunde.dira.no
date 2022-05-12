@@ -1,0 +1,54 @@
+﻿@model kunde.dira.no.Models.Kunder
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Kunder</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Adresse)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Adresse)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PostNrSted)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PostNrSted)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.KontaktPTek)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.KontaktPTek)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.KontaktPØk)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.KontaktPØk)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.KontaktPLed)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.KontaktPLed)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TripleTID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TripleTID)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.OrgNr">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

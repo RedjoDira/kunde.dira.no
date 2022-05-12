@@ -1,9 +1,11 @@
 using kunde.dira.no.Data.EF;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.Identity.Web;
-using Microsoft.Identity.Web.UI;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Web;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.Identity.Web.UI;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,13 +19,14 @@ builder.Services.AddAuthorization(options =>
     // By default, all incoming requests will be authorized according to the default policy.
     options.FallbackPolicy = options.DefaultPolicy;
 });
-
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<PostgresContext>(o
-    => o.UseNpgsql(builder.Configuration.GetConnectionString("")));
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
-builder.Services.AddRazorPages().AddMicrosoftIdentityUI();
-    
+builder.Services.AddDbContext<PostgresContext>(o
+    => o.UseNpgsql(builder.Configuration.GetConnectionString("KundeDiraLocal")));
+
+
+
 
 var app = builder.Build();
 
@@ -39,13 +42,21 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+
+app.MapRazorPages();
 app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapRazorPages();
-app.MapControllers();
 
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Kunders}/{action=Index}/{id?}");
+
+});
 
 app.Run();
