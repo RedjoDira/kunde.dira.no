@@ -47,18 +47,12 @@ app.UseStaticFiles();
 
 app.MapRazorPages();
 app.UseRouting();
-
+app.MapControllers();
 app.UseAuthentication();
 app.UseAuthorization();
 
 
+app.MapDefaultControllerRoute();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Kunders}/{action=Index}/{id?}");
-
-});
 
 app.Run();

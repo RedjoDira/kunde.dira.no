@@ -3,8 +3,10 @@ using kunde.dira.no.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace kunde.dira.no.KundersController
-{
+namespace kunde.dira.no.KundersController { 
+
+    [ApiController]
+    [Route("controller")]
     public class KundersController : Controller
     {
         private readonly PostgresContext _context;

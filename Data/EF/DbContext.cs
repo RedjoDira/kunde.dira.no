@@ -19,6 +19,8 @@ namespace kunde.dira.no.Data.EF
         }
 
         public DbSet<Kunder> Kunders { get; set; }
+        public DbSet<Kontakter> Kontakers { get; set; }
+        public DbSet<Tjenester> Tjenesters { get; set; }
 
 
 
